@@ -1,0 +1,4 @@
+product_id,name,price_rm,monthly_volume,unit_cost_rm
+P01,HVAC Control Board HC-210,82.0,12000,65.29
+P02,Motor Drive Controller MD-450,122.0,6000,87.55
+P03,Smart Meter Control Board SM-120,88.0,9000,69.49

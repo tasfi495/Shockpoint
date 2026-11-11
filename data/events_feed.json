@@ -1,0 +1,38 @@
+[
+  {
+    "timestamp": "2026-11-12T08:00:00+08:00",
+    "headline": "Typhoon warning raised for Pearl River Delta; Yantian terminal suspends vessel berthing",
+    "scenario_id": "S1",
+    "severity": 40
+  },
+  {
+    "timestamp": "2026-11-12T08:25:00+08:00",
+    "headline": "Yantian port operations halted as typhoon makes landfall near Shenzhen",
+    "scenario_id": "S1",
+    "severity": 85
+  },
+  {
+    "timestamp": "2026-11-12T09:10:00+08:00",
+    "headline": "Port backlog grows: carriers announce 2-week delays on South China sailings",
+    "scenario_id": "S1",
+    "severity": 95
+  },
+  {
+    "timestamp": "2026-11-12T10:10:00+08:00",
+    "headline": "Global PC and appliance makers report weaker orders for next quarter",
+    "scenario_id": "S2",
+    "severity": 30
+  },
+  {
+    "timestamp": "2026-11-12T11:10:00+08:00",
+    "headline": "Chipmakers flag inventory glut as electronics demand slows sharply",
+    "scenario_id": "S2",
+    "severity": 50
+  },
+  {
+    "timestamp": "2026-11-12T12:10:00+08:00",
+    "headline": "Major customers cut component orders by a quarter amid demand slump",
+    "scenario_id": "S2",
+    "severity": 60
+  }
+]

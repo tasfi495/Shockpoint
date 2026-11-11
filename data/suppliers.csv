@@ -1,0 +1,13 @@
+supplier_id,name,country,lat,lon,material_id,share_pct,unit_cost_rm,lead_time_days,capacity_units_per_week,is_alternative,reliability,ship_route
+SUP01,Shenzhen Huaxin Power Semiconductor,China,22.5431,114.0579,M02,100,6.5,14,9000,False,0.92,Yantian (Shenzhen) -> Penang Port
+SUP02,Dongguan Lianda Circuit Technology,China,23.0207,113.7518,M03,100,9.0,12,7000,False,0.9,Yantian (Shenzhen) -> Penang Port
+SUP03,Xiamen Jinlu Passive Components,China,24.4798,118.0894,M04,100,4.0,10,3500,False,0.88,Xiamen -> Penang Port
+SUP04,Ningbo Haitong Connector,China,29.8683,121.544,M05,100,3.5,10,3200,False,0.72,Ningbo -> Penang Port
+SUP05,Formosa MicroLogic Corp.,Taiwan,24.8138,120.9675,M01,70,18.0,12,3600,False,0.95,Kaohsiung -> Penang Port
+SUP06,Kansai Microdevices K.K.,Japan,34.6937,135.5023,M01,30,18.6,12,1800,False,0.9,Kobe -> Penang Port
+SUP07,Hanbit Wireless Co.,South Korea,37.2636,127.0286,M06,60,24.0,12,1600,False,0.93,Busan -> Penang Port
+SUP08,Bac Ninh Link Modules,Vietnam,21.1861,106.0763,M06,40,25.0,12,1200,False,0.78,Haiphong -> Penang Port
+ALT01,Changwon Power Devices,South Korea,35.228,128.6811,M02,0,7.15,9,8000,True,0.94,Busan -> Penang Port
+ALT02,Kaohsiung PowerChip Ltd.,Taiwan,22.6273,120.3014,M02,0,7.0,12,2000,True,0.89,Kaohsiung -> Penang Port
+ALT03,Pulau Circuit Works,Malaysia,5.358,100.392,M03,0,10.8,4,3000,True,0.86,Prai -> Bayan Lepas (road)
+ALT04,Saigon Passive Tech,Vietnam,10.8231,106.6297,M04,0,4.4,8,2500,True,0.84,Cat Lai (HCMC) -> Penang Port

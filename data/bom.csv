@@ -1,0 +1,12 @@
+product_id,material_id,qty_per_unit
+P01,M01,1
+P01,M02,1
+P01,M03,1
+P01,M04,1
+P02,M01,1
+P02,M02,2
+P02,M03,1
+P02,M05,2
+P03,M02,1
+P03,M03,1
+P03,M06,1

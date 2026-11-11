@@ -1,0 +1,152 @@
+[
+  {
+    "id": "DO_NOTHING",
+    "scenario_type": "all",
+    "name": "Do nothing",
+    "description": "Keep current suppliers, orders and production plan. Shows the cost of inaction.",
+    "upfront_cost": {
+      "rule": "fixed",
+      "amount_rm": 0
+    },
+    "lead_time_change": null,
+    "cost_change_pct": 0,
+    "stock_change": null,
+    "feasibility_days": 0
+  },
+  {
+    "id": "S1_BUY_EARLY_ALT",
+    "scenario_type": "supply",
+    "name": "Buy early from an alternative supplier",
+    "description": "Place an emergency order now with the fastest alternative supplier outside the closed area, enough to cover the supply gap plus a safety buffer of the stopped material.",
+    "supplier_pick": "fastest",
+    "upfront_cost": {
+      "rule": "qty_x_alt_unit_cost",
+      "qty": "daily_usage x (supply_gap_days + feasibility_safety_buffer_days)"
+    },
+    "lead_time_change": {
+      "rule": "set_to_supplier_lead_time"
+    },
+    "cost_change_pct": 10,
+    "stock_change": {
+      "rule": "add_qty_on_arrival"
+    },
+    "feasibility_days": 9
+  },
+  {
+    "id": "S1_SWITCH_ALT",
+    "scenario_type": "supply",
+    "name": "Switch part of volume to a second alternative supplier",
+    "description": "Qualify another alternative supplier outside the closed area and move volume of the stopped material to it. Limited by its weekly capacity.",
+    "supplier_pick": "second",
+    "upfront_cost": {
+      "rule": "fixed",
+      "amount_rm": 12000,
+      "note": "qualification + first-article inspection"
+    },
+    "lead_time_change": {
+      "rule": "set_to_supplier_lead_time"
+    },
+    "cost_change_pct": 7.7,
+    "stock_change": {
+      "rule": "add_capacity_limited_qty_on_arrival"
+    },
+    "feasibility_days": 12
+  },
+  {
+    "id": "S1_AIR_FREIGHT",
+    "scenario_type": "supply",
+    "name": "Air-freight critical parts",
+    "description": "Fly the stopped material from the current supplier through the airport instead of the closed port. Limited by booked air cargo space.",
+    "upfront_cost": {
+      "rule": "qty_x_air_surcharge",
+      "surcharge_assumption": "air_freight_surcharge_rm_per_unit"
+    },
+    "lead_time_change": {
+      "rule": "set_days",
+      "days": 5
+    },
+    "cost_change_pct": 0,
+    "stock_change": {
+      "rule": "add_air_capacity_limited_qty"
+    },
+    "feasibility_days": 5
+  },
+  {
+    "id": "S1_RAISE_PRICES",
+    "scenario_type": "supply",
+    "name": "Raise selling prices 5%",
+    "description": "Pass the higher input and freight cost to customers. Does not fix the supply gap.",
+    "upfront_cost": {
+      "rule": "fixed",
+      "amount_rm": 0
+    },
+    "lead_time_change": null,
+    "cost_change_pct": 0,
+    "stock_change": null,
+    "feasibility_days": 14,
+    "price_change_pct": 5
+  },
+  {
+    "id": "S2_CUT_PO",
+    "scenario_type": "demand",
+    "name": "Cut purchase orders",
+    "description": "Cancel open purchase orders in line with the demand drop, after the supplier notice period.",
+    "upfront_cost": {
+      "rule": "pct_of_cancelled_value",
+      "assumption": "po_cancellation_fee_pct"
+    },
+    "lead_time_change": null,
+    "cost_change_pct": 0,
+    "stock_change": {
+      "rule": "reduce_open_po_by_demand_drop_after_notice"
+    },
+    "feasibility_days": 7
+  },
+  {
+    "id": "S2_SLOW_PRODUCTION",
+    "scenario_type": "demand",
+    "name": "Slow production (cut shifts)",
+    "description": "Drop overtime and one shift so variable conversion cost falls with volume.",
+    "upfront_cost": {
+      "rule": "fixed",
+      "amount_rm": 25000,
+      "note": "shift change and contract labour release"
+    },
+    "lead_time_change": null,
+    "cost_change_pct": 0,
+    "stock_change": null,
+    "feasibility_days": 14
+  },
+  {
+    "id": "S2_DISCOUNT",
+    "scenario_type": "demand",
+    "name": "Discount 10% to clear stock",
+    "description": "Cut prices 10% to win back volume and use up stock. Margin per board falls.",
+    "upfront_cost": {
+      "rule": "fixed",
+      "amount_rm": 0
+    },
+    "lead_time_change": null,
+    "cost_change_pct": 0,
+    "stock_change": {
+      "rule": "volume_recovers_by_elasticity"
+    },
+    "feasibility_days": 3,
+    "price_change_pct": -10
+  },
+  {
+    "id": "S2_RENEGOTIATE",
+    "scenario_type": "demand",
+    "name": "Renegotiate supplier contracts",
+    "description": "Negotiate 5% lower input prices for purchases after the negotiation period.",
+    "upfront_cost": {
+      "rule": "fixed",
+      "amount_rm": 20000,
+      "note": "legal and procurement time"
+    },
+    "lead_time_change": null,
+    "cost_change_pct": -5,
+    "stock_change": null,
+    "feasibility_days": 21
+  }
+]

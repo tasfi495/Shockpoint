@@ -1,0 +1,170 @@
+[
+  {
+    "id": "S1",
+    "name": "Port closure / shipping disruption",
+    "type": "supply",
+    "category": "Port closure / shipping disruption",
+    "description": "A typhoon, strike or other disruption shuts a port our supplies pass through. Shipments from the affected suppliers cannot move until it reopens, so lead times stretch and freight rates rise. Pick a supplier country, or Penang Port itself, where all our imports land.",
+    "affected_countries": [
+      "China",
+      "Taiwan",
+      "South Korea",
+      "Japan",
+      "Vietnam",
+      "Malaysia"
+    ],
+    "precedent": "COVID-related shutdowns at Yantian port (Shenzhen) in 2021 delayed shipments for weeks.",
+    "drivers": {
+      "affected_country": {
+        "label": "Affected country",
+        "type": "select",
+        "default": "China",
+        "options": [
+          "China",
+          "Taiwan",
+          "South Korea",
+          "Japan",
+          "Vietnam",
+          "Malaysia"
+        ]
+      },
+      "severity_pct": {
+        "label": "Severity (% export capacity lost)",
+        "type": "range",
+        "default": 85,
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "%"
+      },
+      "duration_days": {
+        "label": "Duration",
+        "type": "range",
+        "default": 14,
+        "min": 1,
+        "max": 45,
+        "step": 1,
+        "unit": "days"
+      },
+      "freight_increase_pct": {
+        "label": "Freight cost increase",
+        "type": "range",
+        "default": 60,
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "%"
+      }
+    },
+    "multipliers": {
+      "lead_time_delay_per_closed_day": 1.0,
+      "input_price_increase_pct": 5
+    },
+    "severity_driver": "severity_pct",
+    "severity_scale": 1.0,
+    "epicentres": {
+      "China": {
+        "name": "Yantian Port (Shenzhen)",
+        "lat": 22.575,
+        "lon": 114.268,
+        "precedent": "COVID-related shutdowns at Yantian port (Shenzhen) in 2021 delayed shipments for weeks."
+      },
+      "Taiwan": {
+        "name": "Kaohsiung Port",
+        "lat": 22.613,
+        "lon": 120.283,
+        "precedent": "Typhoon Krathon made landfall at Kaohsiung in October 2024 and temporarily shut Taiwan's major ports, including Kaohsiung."
+      },
+      "South Korea": {
+        "name": "Busan Port",
+        "lat": 35.104,
+        "lon": 129.042,
+        "precedent": "Typhoon Hinnamnor closed Busan port in September 2022 and disrupted Asian shipping schedules."
+      },
+      "Japan": {
+        "name": "Port of Kobe",
+        "lat": 34.67,
+        "lon": 135.21,
+        "precedent": "Typhoon Jebi flooded container terminals at Kobe and Osaka in September 2018 and shut Kansai Airport."
+      },
+      "Vietnam": {
+        "name": "Port of Haiphong",
+        "lat": 20.86,
+        "lon": 106.69,
+        "precedent": "Super Typhoon Yagi closed Hai Phong's container terminals in September 2024; they took several days to reopen."
+      },
+      "Malaysia": {
+        "name": "Penang Port",
+        "lat": 5.42,
+        "lon": 100.35,
+        "route_port": "Penang Port",
+        "precedent": "Penang Port has had no full closure on record. The nearest case: monsoon floods in November 2025 closed roads and disrupted container traffic around Port Klang."
+      }
+    },
+    "expected_advice": "Act early, secure supply"
+  },
+  {
+    "id": "S2",
+    "name": "Global electronics demand slump",
+    "type": "demand",
+    "category": "Global market downturn",
+    "description": "End-market demand for electronics falls. Customers cut orders, so stock bought for the old plan piles up and cash is tied up in inventory.",
+    "affected_countries": [
+      "Global"
+    ],
+    "precedent": "The 2022-23 electronics and chip inventory glut after the pandemic demand boom.",
+    "drivers": {
+      "demand_drop_pct": {
+        "label": "Demand drop",
+        "type": "range",
+        "default": 25,
+        "min": 0,
+        "max": 60,
+        "step": 5,
+        "unit": "%"
+      },
+      "input_price_change_pct": {
+        "label": "Input price change",
+        "type": "range",
+        "default": -3,
+        "min": -20,
+        "max": 20,
+        "step": 1,
+        "unit": "%"
+      },
+      "myr_usd_change_pct": {
+        "label": "Ringgit vs USD change (+ = stronger ringgit)",
+        "type": "range",
+        "default": 3,
+        "min": -15,
+        "max": 15,
+        "step": 1,
+        "unit": "%"
+      },
+      "supplier_failure_risk_pct": {
+        "label": "Supplier failure risk",
+        "type": "range",
+        "default": 15,
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "%"
+      }
+    },
+    "multipliers": {
+      "lead_time_delay_per_closed_day": 0.0,
+      "input_price_increase_pct": 0
+    },
+    "severity_driver": "demand_drop_pct",
+    "severity_scale": 0.5,
+    "epicentres": {
+      "Global": {
+        "name": "Customer markets (global)",
+        "lat": 5.4164,
+        "lon": 100.3327,
+        "precedent": "The 2022-23 electronics and chip inventory glut after the pandemic demand boom."
+      }
+    },
+    "expected_advice": "Hold back, protect cash"
+  }
+]

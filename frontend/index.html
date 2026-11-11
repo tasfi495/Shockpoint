@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShockPoint · Business decision support</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.1/dist/maplibre-gl.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark"><i data-lucide="activity"></i></div>
+      <div>
+        <div class="brand-name">ShockPoint</div>
+        <div class="brand-sub">Business shock decision support</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <button class="nav-item active" data-view="overview"><i data-lucide="layout-dashboard"></i><span>Overview</span></button>
+      <button class="nav-item" data-view="simulator"><i data-lucide="sliders-horizontal"></i><span>Scenario Simulator</span></button>
+      <button class="nav-item" data-view="exposure"><i data-lucide="network"></i><span>Business Exposure</span></button>
+      <button class="nav-item" data-view="decision"><i data-lucide="scale"></i><span>Decision Engine</span></button>
+      <button class="nav-item" data-view="monitor"><i data-lucide="radio-tower"></i><span>Live Monitor</span></button>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="flow">Global event <i data-lucide="arrow-down"></i> Business exposure <i data-lucide="arrow-down"></i> Impact simulation <i data-lucide="arrow-down"></i> Strategy comparison <i data-lucide="arrow-down"></i> Data-driven decision</div>
+      <span class="badge badge-sim"><i data-lucide="flask-conical"></i> Simulated data</span>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <h1 id="page-title">Overview</h1>
+        <p class="subtitle" id="page-subtitle">Know where a world event hits your business, and what to do about it.</p>
+      </div>
+      <div class="topbar-right">
+        <label class="scenario-switch">
+          <span>Active scenario</span>
+          <select id="scenario-select"></select>
+        </label>
+        <span class="status-pill" id="status-pill"><span class="dot"></span><span id="status-text">Baseline</span></span>
+        <span class="date" id="today-date"></span>
+        <span class="badge badge-sim"><i data-lucide="flask-conical"></i> Simulated data</span>
+      </div>
+    </header>
+
+    <section class="banner calm" id="banner">
+      <div class="banner-icon"><i data-lucide="shield-check" id="banner-icon"></i></div>
+      <div class="banner-body">
+        <div class="banner-title" id="banner-title">Baseline: no active shock</div>
+        <div class="banner-text" id="banner-text">Pick a scenario or play the Live Monitor demo feed to see the impact.</div>
+      </div>
+      <div class="banner-right">
+        <span class="risk-chip" id="banner-risk">Risk: Low</span>
+      </div>
+    </section>
+
+    <!-- ===================================================== OVERVIEW -->
+    <section class="view active" id="view-overview">
+      <div class="grid-overview">
+        <div class="card map-card">
+          <div class="card-head"><h3><i data-lucide="globe-2"></i> Impact map</h3><span class="muted small" id="map-caption">Suppliers, shipping routes and disruption</span></div>
+          <div id="map-overview" class="map"></div>
+          <div class="legend">
+            <span><i class="lg lg-red"></i>Disruption / affected</span>
+            <span><i class="lg lg-amber"></i>At-risk supplier</span>
+            <span><i class="lg lg-blue"></i>Current supplier</span>
+            <span><i class="lg lg-alt"></i>Alternative supplier</span>
+            <span><i class="lg lg-home"></i>Our plant</span>
+            <span><i class="lg" style="background:#3b82f6;transform:rotate(45deg);border-radius:1px"></i>Supplier port</span>
+            <span><i class="lg" style="background:#a78bfa;transform:rotate(45deg);border-radius:1px"></i>Customer port · trade lane</span>
+            <span><i class="lg" style="background:#2dd4bf;transform:rotate(45deg);border-radius:1px"></i>Other major port</span>
+          </div>
+        </div>
+        <div class="card reco-card">
+          <div class="card-head"><h3><i data-lucide="lightbulb"></i> Top recommendation</h3></div>
+          <div id="ov-reco" class="reco-body muted">Run a scenario to get a recommendation.</div>
+          <div class="ai-block">
+            <div class="ai-head"><span class="ai-label" id="ov-ai-label">AI-generated summary</span>
+              <button class="btn btn-ghost btn-sm" id="ov-ai-btn" disabled><i data-lucide="sparkles"></i> Executive briefing</button></div>
+            <p id="ov-ai-text" class="ai-text muted">The briefing uses only the engine's numbers.</p>
+          </div>
+        </div>
+      </div>
+      <div class="kpi-row" id="ov-kpis"></div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head"><h3><i data-lucide="pie-chart"></i> Exposure summary</h3><span class="muted small">Share of supply spend by country</span></div>
+          <div class="exp-summary">
+            <div id="ov-donut" class="chart chart-sm"></div>
+            <ul id="ov-exposure-list" class="stat-list"></ul>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3><i data-lucide="bar-chart-3"></i> Baseline vs scenario</h3><span class="muted small" id="ov-horizon"></span></div>
+          <div id="ov-compare" class="chart chart-sm"></div>
+        </div>
+      </div>
+      <div class="assumptions-slot"></div>
+    </section>
+
+    <!-- ===================================================== SIMULATOR -->
+    <section class="view" id="view-simulator">
+      <div class="grid-sim">
+        <div class="card">
+          <div class="card-head"><h3><i data-lucide="sliders-horizontal"></i> Scenario</h3></div>
+          <div id="sim-picker" class="scenario-picker"></div>
+          <p class="muted small" id="sim-desc"></p>
+          <div id="sim-sliders" class="sliders"></div>
+          <button class="btn btn-primary btn-block" id="run-btn"><i data-lucide="play"></i> Run Simulation</button>
+          <div class="divider"></div>
+          <div class="card-head"><h4><i data-lucide="newspaper"></i> Event to scenario</h4><span class="ai-label">AI-generated</span></div>
+          <textarea id="headline-input" rows="3" placeholder="Paste a news headline, e.g. 'Typhoon halts Yantian port operations for two weeks'"></textarea>
+          <button class="btn btn-ghost btn-block" id="parse-btn"><i data-lucide="wand-2"></i> Turn headline into scenario</button>
+          <p class="small" id="parse-result"></p>
+        </div>
+        <div class="sim-results">
+          <div class="kpi-row compact" id="sim-kpis"></div>
+          <div class="grid-2">
+            <div class="card"><div class="card-head"><h3><i data-lucide="bar-chart-3"></i> Baseline vs scenario (RM)</h3></div><div id="sim-compare" class="chart"></div></div>
+            <div class="card"><div class="card-head"><h3><i data-lucide="trending-down"></i> <span id="sim-proj-title">Stock projection</span></h3></div><div id="sim-projection" class="chart"></div></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><h3><i data-lucide="table"></i> All KPIs: baseline vs scenario</h3><span class="muted small">Click a row to see the formula, inputs and source</span></div>
+            <table class="table" id="sim-kpi-table"></table>
+          </div>
+        </div>
+      </div>
+      <div class="assumptions-slot"></div>
+    </section>
+
+    <!-- ===================================================== EXPOSURE -->
+    <section class="view" id="view-exposure">
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head"><h3><i data-lucide="pie-chart"></i> Supplier dependency</h3><span class="muted small">Share of supply spend by country</span></div>
+          <div id="ex-donut" class="chart"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3><i data-lucide="calendar-clock"></i> Stockout timeline per material</h3><span class="muted small">Runway vs lead time (days)</span></div>
+          <div id="ex-timeline" class="chart"></div>
+        </div>
+      </div>
+      <div class="grid-exp">
+        <div class="card">
+          <div class="card-head"><h3><i data-lucide="factory"></i> Suppliers</h3><span class="muted small">Click a supplier to see its exposure</span></div>
+          <table class="table clickable" id="ex-suppliers"></table>
+        </div>
+        <div class="card" id="ex-detail">
+          <div class="card-head"><h3><i data-lucide="info"></i> Supplier exposure</h3></div>
+          <p class="muted">Select a supplier.</p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card"><div class="card-head"><h3><i data-lucide="package"></i> Affected materials</h3></div><table class="table" id="ex-materials"></table></div>
+        <div class="card"><div class="card-head"><h3><i data-lucide="file-warning"></i> Orders at risk</h3><span class="muted small" id="ex-orders-total"></span></div><table class="table" id="ex-orders"></table></div>
+      </div>
+      <div class="card"><div class="card-head"><h3><i data-lucide="repeat"></i> Alternatives</h3></div><table class="table" id="ex-alts"></table></div>
+      <div class="assumptions-slot"></div>
+    </section>
+
+    <!-- ===================================================== DECISION -->
+    <section class="view" id="view-decision">
+      <div class="grid-dec">
+        <div class="card">
+          <div class="card-head"><h3><i data-lucide="sliders"></i> Criteria weights</h3></div>
+          <div id="weights" class="sliders"></div>
+          <p class="small muted" id="weights-used"></p>
+          <p class="formula" id="score-formula"></p>
+          <button class="btn btn-ghost btn-sm" id="reset-weights"><i data-lucide="rotate-ccw"></i> Reset weights</button>
+        </div>
+        <div class="card reco-card">
+          <div class="card-head"><h3><i data-lucide="award"></i> Recommendation</h3></div>
+          <div id="dec-reco" class="reco-body muted">Run a scenario first.</div>
+          <div class="ai-block">
+            <div class="ai-head"><span class="ai-label" id="dec-ai-label">AI-generated summary</span>
+              <button class="btn btn-ghost btn-sm" id="dec-ai-btn" disabled><i data-lucide="sparkles"></i> AI decision briefing</button></div>
+            <p id="dec-ai-text" class="ai-text muted">Gemini explains the ranking using only the engine's numbers. The ranking itself is rule-based.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3><i data-lucide="list-ordered"></i> Strategy comparison</h3><span class="muted small">"Do nothing" shows the cost of inaction</span></div>
+        <table class="table" id="dec-table"></table>
+      </div>
+      <div class="card"><div class="card-head"><h3><i data-lucide="bar-chart-horizontal"></i> Weighted score by criterion</h3></div><div id="dec-chart" class="chart"></div></div>
+      <div class="assumptions-slot"></div>
+    </section>
+
+    <!-- ===================================================== LIVE MONITOR -->
+    <section class="view" id="view-monitor">
+      <div class="card">
+        <div class="card-head"><h3><i data-lucide="radio-tower"></i> <span id="mon-label">Live Monitor (demo feed, simulated events)</span></h3>
+          <div class="btn-row">
+            <button class="btn btn-primary btn-sm" id="mon-play"><i data-lucide="play"></i> Play feed</button>
+            <button class="btn btn-ghost btn-sm" id="mon-next"><i data-lucide="skip-forward"></i> Next event</button>
+            <button class="btn btn-ghost btn-sm" id="mon-reset"><i data-lucide="rotate-ccw"></i> Reset</button>
+          </div>
+        </div>
+        <div class="seg" id="mon-source" role="tablist" aria-label="Feed source">
+          <button class="seg-btn active" data-src="demo">Demo feed</button>
+          <button class="seg-btn" data-src="live">Real headlines</button>
+        </div>
+        <p class="muted small" id="mon-help">Each event is mapped to a scenario and its settings, then runs through the same simulation. A new event raises the Overview banner.</p>
+        <p class="small mon-note" id="mon-note" hidden></p>
+        <ul class="feed" id="mon-feed"></ul>
+      </div>
+      <div class="assumptions-slot"></div>
+    </section>
+  </main>
+
+  <!-- Ask ShockPoint side panel -->
+  <button class="ask-fab" id="ask-open" title="Ask ShockPoint"><i data-lucide="message-circle-question"></i></button>
+  <aside class="ask-panel" id="ask-panel">
+    <div class="card-head"><h3><i data-lucide="message-circle-question"></i> Ask ShockPoint</h3><button class="icon-btn" id="ask-close"><i data-lucide="x"></i></button></div>
+    <p class="small muted">Answers are grounded in the current scenario results. <span class="ai-label">AI-generated</span></p>
+    <div class="ask-log" id="ask-log"></div>
+    <form id="ask-form"><input id="ask-input" placeholder="e.g. What if we wait a week?" autocomplete="off" /><button class="btn btn-primary btn-sm" type="submit"><i data-lucide="send"></i></button></form>
+  </aside>
+
+  <div class="popover" id="popover"></div>
+  <div class="toast" id="toast"></div>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+  <script src="https://unpkg.com/maplibre-gl@5.24.1/dist/maplibre-gl.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/charts.js"></script>
+  <script src="/js/map.js"></script>
+  <script src="/js/overview.js"></script>
+  <script src="/js/simulator.js"></script>
+  <script src="/js/exposure.js"></script>
+  <script src="/js/decision.js"></script>
+  <script src="/js/monitor.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

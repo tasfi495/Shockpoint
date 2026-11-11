@@ -1,0 +1,7 @@
+material_id,name,unit,stock_units,daily_usage_units,safety_stock_units,criticality
+M01,32-bit microcontroller (MCU),pcs,15000,600,4200,3
+M02,Power management IC (PMIC),pcs,17600,1100,7700,3
+M03,6-layer bare PCB,pcs,27000,900,6300,2
+M04,Passive component kit (MLCC + resistors),kit,16000,400,2800,1
+M05,Board connector set,set,14000,400,2800,1
+M06,Wi-Fi/BLE radio module,pcs,8400,300,2100,2

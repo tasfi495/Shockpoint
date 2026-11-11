@@ -1,0 +1,21 @@
+name,value,unit,source
+analysis_horizon_days,60,days,illustrative
+days_per_month,30,days,illustrative
+conversion_cost_pct_of_price,30,%,illustrative
+conversion_variable_share_pct,25,%,illustrative
+freight_cost_pct_of_material,8,%,illustrative
+holding_cost_pct_per_year,20,%,illustrative
+excess_writedown_pct,20,%,illustrative
+po_cancellation_fee_pct,5,%,illustrative
+supplier_notice_days,7,days,illustrative
+air_freight_surcharge_rm_per_unit,1.8,RM/unit,illustrative
+air_cargo_capacity_share_pct,35,%,illustrative
+price_elasticity,1.0,ratio,illustrative
+feasibility_safety_buffer_days,3,days,illustrative
+risk_high_margin_drop_pp,4,pp,illustrative
+risk_high_revenue_at_risk_pct,10,%,illustrative
+risk_medium_margin_drop_pp,1.5,pp,illustrative
+risk_medium_revenue_at_risk_pct,3,%,illustrative
+supplier_stress_threshold,0.4,score,illustrative
+usd_myr_rate,4.0582,MYR per USD,"Trading Economics, USD/MYR on 30 Oct 2026: https://tradingeconomics.com/malaysia/currency"
+copper_lme_usd_per_tonne,13768,USD/tonne,"LME 3-month copper close, reported 9 Nov 2026: https://kalkine.ca/news/general-news/copper-rebounds-as-global-growth-signals-clash-with-supply-constraints"
