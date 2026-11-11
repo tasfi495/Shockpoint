@@ -1,5 +1,4 @@
-# One container: FastAPI engine + API + static frontend. Built for Hugging Face Spaces (Docker SDK).
-# Spaces run the container as user 1000 and send traffic to port 7860 (app_port in README.md).
+
 FROM python:3.11-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PORT=7860
